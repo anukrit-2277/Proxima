@@ -56,7 +56,7 @@ userRouter.get("/user/feed",userAuth,async(req,res)=>{
     try{
         const page= parseInt(req.query.page) ||1;
         let limit= parseInt(req.query.limit) || 3;
-        limit >5 ?5:limit;
+        limit= limit >5 ?5:limit;
         const skip=(page-1)*limit;       
         const loggedInUser=req.user;
         const connectedUsers=await connectionRequest.find({
@@ -79,6 +79,7 @@ userRouter.get("/user/feed",userAuth,async(req,res)=>{
         }
        ).select(USER_SAFE_DATA).skip(skip).limit(limit);    
      //  console.log(userFeed); 
+    // console.log(req.query)
        res.json({
         message:"Data fetched successfully",
         data:userFeed
