@@ -11,6 +11,7 @@ const {userAuth}=require("./middlewares/auth");
 const authRouter=require("./routes/auth.js");
 const profileRouter=require("./routes/profile.js"); 
 const requestRouter=require("./routes/request.js");
+const userRouter = require("./routes/user.js");
 //const {adminAuth,userAuth}=require("./middlewares/auth")
 /*
 app.use("/home",(req,res)=>{
@@ -99,6 +100,7 @@ app.use(cookieParser());
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
 
 
 /*
