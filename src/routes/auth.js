@@ -20,7 +20,10 @@ authRouter.post("/signup",async (req,res)=>{
             password:passwordHash
     });
         await user.save();
-        res.send("user added successfully");   
+        res.json({
+            message:"User added successfully",
+            data:user
+        });   
     }
     catch(err){
         res.status(400).send("Can't add user" +" "+ err.message);
@@ -41,12 +44,13 @@ authRouter.post("/login",async (req,res)=>{
         if(!isValidPassword){   
             throw new Error("Invalid credentials");
         }
-     //   console.log(user._id)
-       // const token=await jwt.sign({_id:user._id},"DevTinder@2277"); //hide/encapsulate the id, will be used to verify user
-       // console.log(token)
+
        const token=await user.getJWT();        //using methods specific to instance of class
         res.cookie("token",token);
-        res.send("user logged in");
+        res.json({
+            message:"User loggedIn successfully",
+            data:user
+        }); 
     }
     catch(err){
         res.status(400).send("Invalid credentials"+err)
@@ -54,7 +58,7 @@ authRouter.post("/login",async (req,res)=>{
 });
 
 authRouter.post("/logout",async(req,res)=>{
-    res.cookie( "token",null,{expires: new Date(Date.now())}).send("logout successfull!!");
+    res.cookie( "token",null,{expires: new Date(Date.now())}).json({message:"logout successfull!!"});
 })
 module.exports=authRouter;
 

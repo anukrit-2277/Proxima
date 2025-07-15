@@ -1,7 +1,9 @@
 const mongoose=require("mongoose");
+require('dotenv').config()
+const DB_LINK=process.env.DB_LINK
 
 const connectDB=async()=>{
-   await mongoose.connect("mongodb+srv://anukrit77:whO9Se6Fo6Td1tha@projectnode.4tai5.mongodb.net/devTinder");
+   await mongoose.connect(DB_LINK);
 
 
 }

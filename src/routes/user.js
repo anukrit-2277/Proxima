@@ -20,6 +20,7 @@ userRouter.get("/user/requests/received",userAuth,async(req,res)=>{
         message:"Data fetched successfully",
         data:connectionRequests
     });
+    
     }
     catch(err){
         res.status(400).send("ERROR: "+err.message);
@@ -91,6 +92,5 @@ userRouter.get("/user/feed",userAuth,async(req,res)=>{
         });
 
     }
-
 });
 module.exports=userRouter;

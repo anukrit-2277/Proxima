@@ -2,7 +2,8 @@ const mongoose=require("mongoose");
 const validator=require("validator");
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcrypt");
-
+require('dotenv').config()
+const SECRET_JWT=process.env.SECRET_JWT
 const userSchema= new mongoose.Schema({
         firstName:{
             type:String,
@@ -69,7 +70,7 @@ const userSchema= new mongoose.Schema({
 );
 
 userSchema.methods.getJWT=async function(){
-    const token=await jwt.sign({_id:this._id},"DevTinder@2277");
+    const token=await jwt.sign({_id:this._id},SECRET_JWT);
     return token;
 }
 
