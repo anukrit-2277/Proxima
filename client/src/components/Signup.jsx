@@ -1,19 +1,19 @@
-import axios from 'axios'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { addUser } from '../utils/userSlice'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import NavBar from './NavBar'
 import Footer from './Footer'
 
-const Login = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     emailId: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleInputChange = (e) => {
@@ -26,29 +26,52 @@ const Login = () => {
     if (error) setError('')
   }
 
-  const handleLogIn = async (e) => {
+  const validateForm = () => {
+    if (!formData.firstName.trim() || !formData.lastName.trim()) {
+      setError('First name and last name are required')
+      return false
+    }
+    if (!formData.emailId.trim()) {
+      setError('Email is required')
+      return false
+    }
+    if (!formData.password) {
+      setError('Password is required')
+      return false
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return false
+    }
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long')
+      return false
+    }
+    return true
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
-    if (!formData.emailId || !formData.password) {
-      setError('Please fill in all fields')
-      return
-    }
+    if (!validateForm()) return
 
     setLoading(true)
     setError('')
 
     try {
-      const result = await axios.post(
-        "http://localhost:1700/login",
-        { emailId: formData.emailId, password: formData.password },
-        { withCredentials: true }
-      )
-      
-      dispatch(addUser(result.data))
-      navigate("/feed")
-    } catch (err) {
-      console.error('Login error:', err)
-      setError(err.response?.data || 'Login failed. Please check your credentials.')
+      const response = await axios.post('http://localhost:1700/signup', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        emailId: formData.emailId,
+        password: formData.password
+      })
+
+      console.log('Signup successful:', response.data)
+      // Redirect to login page after successful signup
+      navigate('/login')
+    } catch (error) {
+      console.error('Signup error:', error)
+      setError(error.response?.data || 'Signup failed. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -72,61 +95,61 @@ const Login = () => {
           <div className="text-white text-center max-w-lg">
             <div className="mb-12">
               <h1 className="text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Proxima
+                Join Proxima
               </h1>
-              <p className="text-2xl text-blue-100 font-light">Where Developers Connect</p>
-              <p className="text-lg text-gray-300 mt-4">The ultimate platform for developer networking and collaboration</p>
+              <p className="text-2xl text-blue-100 font-light">Connect with developers worldwide</p>
+              <p className="text-lg text-gray-300 mt-4">Start your journey in the developer community</p>
             </div>
             
             <div className="space-y-8">
               <div className="flex items-center space-x-6 group">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl">👨‍💻</span>
+                  <span className="text-3xl">🌟</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Find Amazing Developers</h3>
-                  <p className="text-blue-100">Discover talented developers from around the world</p>
+                  <h3 className="text-xl font-semibold mb-2">Free to Join</h3>
+                  <p className="text-blue-100">No hidden fees, completely free forever</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-6 group">
                 <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl">🤝</span>
+                  <span className="text-3xl">⚡</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Build Connections</h3>
-                  <p className="text-blue-100">Create meaningful professional relationships</p>
+                  <h3 className="text-xl font-semibold mb-2">Quick Setup</h3>
+                  <p className="text-blue-100">Get started in under 2 minutes</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-6 group">
                 <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl">🚀</span>
+                  <span className="text-3xl">🔒</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Collaborate & Create</h3>
-                  <p className="text-blue-100">Work together on incredible projects</p>
+                  <h3 className="text-xl font-semibold mb-2">Secure & Private</h3>
+                  <p className="text-blue-100">Your data is always protected</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Side - Login Form */}
+        {/* Right Side - Signup Form */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
           <div className="w-full max-w-md">
             {/* Mobile Branding */}
             <div className="text-center mb-12 lg:hidden">
               <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                Proxima
+                Join Proxima
               </h1>
-              <p className="text-xl text-white">Where Developers Connect</p>
+              <p className="text-xl text-white">Connect with developers worldwide</p>
             </div>
 
             <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-                <p className="text-blue-100">Sign in to continue your journey</p>
+                <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
+                <p className="text-blue-100">Start your developer journey today</p>
               </div>
               
               {error && (
@@ -140,7 +163,38 @@ const Login = () => {
                 </div>
               )}
 
-              <form onSubmit={handleLogIn} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-white mb-3">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                      placeholder="John"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-white mb-3">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                      placeholder="Doe"
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-sm font-semibold text-white mb-3">
                     Email Address
@@ -150,8 +204,8 @@ const Login = () => {
                     name="emailId"
                     value={formData.emailId}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
-                    placeholder="Enter your email"
+                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                    placeholder="john@example.com"
                     required
                   />
                 </div>
@@ -165,20 +219,39 @@ const Login = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
-                    placeholder="Enter your password"
+                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                    placeholder="Create a strong password"
                     required
                   />
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <label className="flex items-center">
-                    <input type="checkbox" className="rounded border-white/30 text-blue-400 focus:ring-blue-400 bg-white/10" />
-                    <span className="ml-3 text-sm text-white">Remember me</span>
+                <div>
+                  <label className="block text-sm font-semibold text-white mb-3">
+                    Confirm Password
                   </label>
-                  <button type="button" className="text-sm text-blue-300 hover:text-blue-200 font-medium transition-colors">
-                    Forgot password?
-                  </button>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                    placeholder="Confirm your password"
+                    required
+                  />
+                </div>
+
+                <div className="flex items-start">
+                  <input type="checkbox" className="mt-1 rounded border-white/30 text-blue-400 focus:ring-blue-400 bg-white/10" required />
+                  <label className="ml-3 text-sm text-white">
+                    I agree to the{' '}
+                    <a href="#" className="text-blue-300 hover:text-blue-200 font-medium">
+                      Terms of Service
+                    </a>{' '}
+                    and{' '}
+                    <a href="#" className="text-blue-300 hover:text-blue-200 font-medium">
+                      Privacy Policy
+                    </a>
+                  </label>
                 </div>
 
                 <button
@@ -189,12 +262,12 @@ const Login = () => {
                   {loading ? (
                     <div className="flex items-center justify-center">
                       <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-                      Signing In...
+                      Creating Account...
                     </div>
                   ) : (
                     <div className="flex items-center justify-center">
-                      <span className="text-xl mr-2">🚀</span>
-                      Sign In
+                      <span className="text-xl mr-2">✨</span>
+                      Create Account
                     </div>
                   )}
                 </button>
@@ -206,18 +279,17 @@ const Login = () => {
                     <div className="w-full border-t border-white/20" />
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-4 bg-transparent text-white/70">Or continue with</span>
+                    <span className="px-4 bg-transparent text-white/70">Already have an account?</span>
                   </div>
                 </div>
 
                 <div className="mt-6">
                   <p className="text-center text-sm text-white/80">
-                    Don't have an account?{' '}
                     <button
                       className="font-semibold text-blue-300 hover:text-blue-200 transition-colors"
-                      onClick={() => navigate('/signup')}
+                      onClick={() => navigate('/login')}
                     >
-                      Sign up for free
+                      Sign in instead
                     </button>
                   </p>
                 </div>
@@ -232,4 +304,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Signup
