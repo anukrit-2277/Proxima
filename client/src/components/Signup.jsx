@@ -136,8 +136,8 @@ const Signup = () => {
         </div>
 
         {/* Right Side - Signup Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-          <div className="w-full max-w-md">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
+          <div className="w-full max-w-md mx-auto">
             {/* Mobile Branding */}
             <div className="text-center mb-12 lg:hidden">
               <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
@@ -146,7 +146,7 @@ const Signup = () => {
               <p className="text-xl text-white">Connect with developers worldwide</p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
+            <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-8 border border-white/20">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
                 <p className="text-blue-100">Start your developer journey today</p>
@@ -164,7 +164,7 @@ const Signup = () => {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-white mb-3">
                       First Name
@@ -204,7 +204,7 @@ const Signup = () => {
                     name="emailId"
                     value={formData.emailId}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
                     placeholder="john@example.com"
                     required
                   />
@@ -219,7 +219,7 @@ const Signup = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
                     placeholder="Create a strong password"
                     required
                   />
@@ -234,7 +234,7 @@ const Signup = () => {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
+                    className="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 outline-none backdrop-blur-sm"
                     placeholder="Confirm your password"
                     required
                   />

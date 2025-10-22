@@ -33,27 +33,32 @@ const NavBar = () => {
 
   if (!userInfo?.data) {
     return (
-      <div className="navbar bg-base-300 shadow-sm">
+      <div className="navbar bg-slate-800 shadow-lg relative z-50">
         <div className="flex-1">
-          <button className="btn btn-ghost text-xl text-white hover:text-white" onClick={handleLogoClick}>
+          <button 
+            className="btn btn-ghost text-xl text-white hover:text-white font-bold" 
+            onClick={handleLogoClick}
+          >
             Proxima
           </button>
         </div>
         <div className="flex gap-2">
           <button
-            className={`btn btn-ghost text-white hover:text-white ${isActive('/login') ? 'btn-active' : ''}`}
-            onClick={() => {
-              console.log('Login button clicked');
-              navigate('/login');
+            className="px-4 py-2 text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              navigate('/login')
             }}
           >
             Login
           </button>
           <button
-            className={`btn btn-primary ${isActive('/signup') ? 'btn-active' : ''}`}
-            onClick={() => {
-              console.log('Signup button clicked');
-              navigate('/signup');
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              navigate('/signup')
             }}
           >
             Sign Up
@@ -64,9 +69,9 @@ const NavBar = () => {
   }
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
+    <div className="navbar bg-slate-800 shadow-lg relative z-50">
       <div className="flex-1">
-        <button className="btn btn-ghost text-xl text-white hover:text-white" onClick={handleLogoClick}>
+        <button className="btn btn-ghost text-xl text-white hover:text-white font-bold" onClick={handleLogoClick}>
           Proxima
         </button>
       </div>
@@ -74,19 +79,19 @@ const NavBar = () => {
       {/* Navigation Links */}
       <div className="flex gap-2 mx-2">
         <button
-          className={`btn btn-ghost btn-sm ${isActive('/feed') ? 'btn-active' : ''}`}
+          className={`btn btn-ghost btn-sm text-white hover:text-white hover:bg-white/10 ${isActive('/feed') ? 'btn-active bg-white/20' : ''}`}
           onClick={() => navigate('/feed')}
         >
           Feed
         </button>
         <button
-          className={`btn btn-ghost btn-sm ${isActive('/connections') ? 'btn-active' : ''}`}
+          className={`btn btn-ghost btn-sm text-white hover:text-white hover:bg-white/10 ${isActive('/connections') ? 'btn-active bg-white/20' : ''}`}
           onClick={() => navigate('/connections')}
         >
           Connections
         </button>
         <button
-          className={`btn btn-ghost btn-sm ${isActive('/requests') ? 'btn-active' : ''}`}
+          className={`btn btn-ghost btn-sm text-white hover:text-white hover:bg-white/10 ${isActive('/requests') ? 'btn-active bg-white/20' : ''}`}
           onClick={() => navigate('/requests')}
         >
           Requests
@@ -95,7 +100,7 @@ const NavBar = () => {
 
       {/* User Menu */}
       <div className="flex gap-2 mx-2">
-        <p className="text-sm hidden sm:block">
+        <p className="text-sm hidden sm:block text-white">
           {userInfo?.data?.firstName ? `Welcome, ${userInfo?.data?.firstName}` : ''}
         </p>
         <div className="dropdown dropdown-end">

@@ -113,8 +113,8 @@ const Login = () => {
         </div>
 
         {/* Right Side - Login Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-          <div className="w-full max-w-md">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8 pb-20">
+          <div className="w-full max-w-md mx-auto">
             {/* Mobile Branding */}
             <div className="text-center mb-12 lg:hidden">
               <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
